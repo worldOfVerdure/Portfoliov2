@@ -7,7 +7,7 @@ import { resolvedFonts as fonts } from '../config/fontsConfig.ts';
 export const getTheme = (mode: 'light' | 'dark') => {
   const theme = createTheme({
     breakpoints: { values: customBreakpoints },
-    palette: createPalette('dark'),
+    palette: createPalette(mode),
     // other slices
   });
   theme.typography = {

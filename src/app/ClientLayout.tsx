@@ -9,7 +9,7 @@ import { ReactNode/*, useState */ } from 'react';//useState for light/dark mode
 export default function ClientLayout({ children }: { children: ReactNode }) {
   //const [mode, setMode] = useState<'light' | 'dark'>('light');
   //const theme = useCachedTheme(mode); //For light and dark mode
-  const theme = getTheme('light');
+  const theme = getTheme('dark');
   return (
     <CacheProvider value={emotionCache} >
       <ThemeProvider theme={theme} >
