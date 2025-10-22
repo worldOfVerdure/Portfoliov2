@@ -29,10 +29,10 @@ const Header = () => {
         useFlexGap
       >
         <Typography variant="h1">
-          Hello, I'm
+          Hello, I&apos;m
           <ColorChangeSpan color={theme.palette.background.paper}> Andrew</ColorChangeSpan>.
           <br/>
-          I'm a Fullstack developer.
+          I&apos;m a Fullstack developer.
         </Typography>
         <ViewWorkBtn color={theme.palette.background.paper} src="#">View My Work</ViewWorkBtn>
       </Stack>
