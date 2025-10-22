@@ -7,7 +7,6 @@ type ViewWorkBtnProps = {
   src: string;
 };
 
-
 const ViewWorkBtn = ({ children, color, src }: ViewWorkBtnProps ) => {
   return (
     <Link
