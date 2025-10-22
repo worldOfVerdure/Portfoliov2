@@ -1,6 +1,6 @@
 const metadata = {
-  title: 'Personal Template',
-  description: 'Personal template used to more quickly build applications.',
+  title: 'Andrew Chupka | Full Stack Web Developer',
+  description: 'Portfolio containing works and information about web developer Andrew Chupka',
   keywords: [
     
   ],
@@ -26,22 +26,22 @@ const metadata = {
   },
   manifest: '/favicons/site.webmanifest',
   openGraph: {
-    title: 'Personal Template',
-    description: 'Personal template used to more quickly build applications.',
+    title: 'Andrew Chupka | Full Stack Web Developer',
+    description: 'Portfolio containing works and information about web developer Andrew Chupka',
     url: 'https://example.com',
     images: [
       {
         url: '/og-image.png', // Place this image in your /public folder
         width: 1200,
         height: 630,
-        alt: 'Ut enim ad minim veniam.'
+        alt: 'Favicon of website'
       },
     ]
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Personal Template',
-    description: 'Personal template used to more quickly build applications.',
+    title: 'Andrew Chupka | Full Stack Web Developer',
+    description: 'Portfolio containing works and information about web developer Andrew Chupka',
     images: ['/og-image.png']
   },
 };
