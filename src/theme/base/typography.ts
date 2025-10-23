@@ -9,7 +9,7 @@ const customTypography = (
     fontFamily: fonts.heading,
     fontWeight: 400,
     fontSize: '2.8rem', // xs
-    lineHeight: 1.6,
+    lineHeight: 1.4,
     [`@media (min-width:${breakpoints.sm}px)`]: {
       fontSize: '3.25rem',
     },

@@ -24,15 +24,18 @@ const Header = () => {
           position: 'absolute',
           textAlign: 'center',
           transform: 'translate(-50%, -50%)',
-          top: '50%'
+          top: '50%',
+          width: '100%'
         }}
         useFlexGap
       >
         <Typography variant="h1">
-          Hello, I&apos;m
-          <ColorChangeSpan color={theme.palette.background.paper}> Andrew</ColorChangeSpan>.
+          <Typography component="span" variant="inherit">
+            Hello, I&apos;m
+            <ColorChangeSpan color={theme.palette.background.paper}> Andrew</ColorChangeSpan>.
+          </Typography>
           <br/>
-          I&apos;m a Fullstack developer.
+          <Typography component="span" variant="inherit">I&apos;m a Fullstack developer.</Typography>
         </Typography>
         <ViewWorkBtn color={theme.palette.background.paper} src="#">View My Work</ViewWorkBtn>
       </Stack>
