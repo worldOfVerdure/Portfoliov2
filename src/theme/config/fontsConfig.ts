@@ -7,6 +7,7 @@ export type FontConfig = {
 //Add your fonts here, before the fontstack
 const fonts: FontConfig = {
   body: [
+    'var(--font-lora)',
     '-apple-system',
     'BlinkMacSystemFont',
     '"Segoe UI"',
@@ -16,6 +17,7 @@ const fonts: FontConfig = {
     'sans-serif',
   ].join(','),
   heading: [
+    'var(--font-montserrat)',
     'Georgia',
     'Cambria',
     '"Times New Roman"',

@@ -3,7 +3,7 @@ import path from 'path';
 
 const nextConfig: NextConfig = {
   /* config options here */
-  reactStrictMode: true, // Helps catch potential issues in development
+  reactStrictMode: false, // Helps catch potential issues in development
   // Enable experimental features if needed
   typedRoutes: true,   // Type-safe routing (Next.js 14+)
   // images: {
