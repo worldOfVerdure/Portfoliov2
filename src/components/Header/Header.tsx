@@ -21,13 +21,13 @@ const Header = () => {
   const [leftSpring, leftApi] = useSpring(() => ({
     transform: 'translateX(-100%)',
     opacity: 0,
-    config: { tension: 120, friction: 60 },
+    config: { tension: 120, friction: 70 },
   }));
 
   const [rightSpring, rightApi] = useSpring(() => ({
     transform: 'translateX(100%)',
     opacity: 0,
-    config: { tension: 120, friction: 60 },
+    config: { tension: 120, friction: 70 },
   }));
 
   // start animations on client mount to avoid SSR / hydration mismatches
