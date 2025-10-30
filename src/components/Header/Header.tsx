@@ -14,6 +14,8 @@ const AnimatedTypography = animated(
   })
 );
 
+const AnimatedViewWorkBtn = animated(ViewWorkBtn);
+
 const Header = () => {
   const theme = useTheme();
 
@@ -30,11 +32,18 @@ const Header = () => {
     config: { tension: 120, friction: 40 },
   }));
 
+  const [buttonSpring, buttonApi] = useSpring(() => ({
+    transform: 'translateY(80%)',
+    opacity: 0,
+    config: { tension: 100, friction: 60 },
+  }));
+
   // start animations on client mount to avoid SSR / hydration mismatches
   React.useEffect(() => {
     leftApi.start({ transform: 'translateX(0%)', opacity: 1 });
     rightApi.start({ transform: 'translateX(0%)', opacity: 1 });
-  }, [leftApi, rightApi]);
+    buttonApi.start({ transform: 'translateY(0%)', opacity: 1 });
+  }, [leftApi, rightApi, buttonApi]);
 
   return (
     <Box
@@ -74,12 +83,12 @@ const Header = () => {
           style={rightSpring}
           sx={{ display: 'block' }}
         >
-          I&apos;m a Fullstack developer.
+          I&apos;m a Fullstack web developer.
         </AnimatedTypography>
 
-        <ViewWorkBtn color={theme.palette.background.paper} src="#">
+        <AnimatedViewWorkBtn color={theme.palette.background.paper} src="#" style={buttonSpring}>
           View My Work
-        </ViewWorkBtn>
+        </AnimatedViewWorkBtn>
       </Stack>
     </Box>
   );
