@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
 import { animated, useSpring } from '@react-spring/web';
 import { Box, Stack, Typography, TypographyProps } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import ColorChangeSpan from '../helpers/typographyHelpers/ColorChangeSpan.tsx';
+import Graph from '../Graph/Graph.tsx';
+import React from 'react';
+import { useTheme } from '@mui/material/styles';
 import ViewWorkBtn from '../reuseables/buttons/viewWorkBtn/ViewWorkBtn.tsx';
 
 // Typed animated wrapper around MUI Typography that forwards the ref
@@ -23,19 +24,19 @@ const Header = () => {
   const [leftSpring, leftApi] = useSpring(() => ({
     transform: 'translateX(-100%)',
     opacity: 0,
-    config: { tension: 120, friction: 40 },
+    config: { tension: 120, friction: 40 }
   }));
 
   const [rightSpring, rightApi] = useSpring(() => ({
     transform: 'translateX(100%)',
     opacity: 0,
-    config: { tension: 120, friction: 40 },
+    config: { tension: 120, friction: 40 }
   }));
 
   const [buttonSpring, buttonApi] = useSpring(() => ({
     transform: 'translateY(80%)',
     opacity: 0,
-    config: { tension: 100, friction: 60 },
+    config: { tension: 100, friction: 60 }
   }));
 
   // start animations on client mount to avoid SSR / hydration mismatches
@@ -52,8 +53,10 @@ const Header = () => {
         height: '100vh',
         position: 'relative',
         width: '100%',
+        // zIndex: 2
       }}
     >
+      <Graph />
       <Stack
         spacing={3}
         sx={{
@@ -61,8 +64,8 @@ const Header = () => {
           left: '50%',
           position: 'absolute',
           textAlign: 'center',
-          transform: 'translate(-50%, -50%)',
           top: '50%',
+          transform: 'translate(-50%, -50%)',
           width: '100%',
         }}
         useFlexGap

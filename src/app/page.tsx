@@ -5,7 +5,7 @@ import Header from '../components/Header';
 
 export default function HomePage() {
   return (
-    <Container maxWidth="xxxl">
+    <Container maxWidth="xxxl" disableGutters>
       <Stack> 
         <Header />
       </Stack>
