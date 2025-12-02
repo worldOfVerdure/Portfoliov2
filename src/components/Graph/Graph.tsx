@@ -27,6 +27,9 @@ const MOUSE_EFFECT_RADIUS_EDGES = 375; // edges disappear sooner than nodes
 // Choose falloff: "linear" or "quadratic"
 const MOUSE_FALLOFF: "linear" | "quadratic" = "linear";
 
+/** Smoothing for touch dragging (0 = immediate, 1 = no movement) */
+const DRAG_LERP = 0.18;
+
 /** Utility: convert #rrggbb to {r,g,b} */
 function hexToRgb(hex: string) {
   if (!hex) return { r: 200, g: 200, b: 200 };
@@ -47,6 +50,7 @@ function hexToRgb(hex: string) {
  * CanvasForceGraph (responsive) with:
  * - global pointer tracking so the mouse node follows even when pointer is over other DOM elements
  * - separate proximity radii for nodes and edges (edges disappear before nodes)
+ * - improved mobile dragging using pointer capture, touch-action none, rAF batching and smoothing (lerp)
  */
 export default function CanvasForceGraph() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -154,6 +158,9 @@ export default function CanvasForceGraph() {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
 
+    // ensure touch interactions don't trigger page scroll while interacting
+    canvas.style.touchAction = "none";
+
     // generate nodes inside current bounds
     const nodes = generateNodes(NODE_COUNT, width, height);
 
@@ -190,42 +197,122 @@ export default function CanvasForceGraph() {
 
     simulationRef.current = simulation;
 
-    // Global pointer handling: update mouseNode position and pin it to pointer
+    // Pointer handling state
     let rafId: number | null = null;
     let lastEvent: PointerEvent | null = null;
+    let isDragging = false;
+    let activePointerId: number | null = null;
 
+    // Helper: linear interpolation
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+    // Global pointer move (hover-like behavior) — still useful when not actively dragging
     function handlePointerMoveGlobal(e: PointerEvent) {
+      // store last event and schedule rAF processing
       lastEvent = e;
       if (rafId == null) {
-        rafId = requestAnimationFrame(() => {
-          rafId = null;
-          if (!lastEvent) return;
-          const rect = canvas.getBoundingClientRect();
-          // compute CSS coords relative to canvas
-          let cx = lastEvent.clientX - rect.left;
-          let cy = lastEvent.clientY - rect.top;
-          // clamp to canvas bounds so the mouse node stays within the canvas
-          cx = Math.max(0, Math.min(cx, rect.width));
-          cy = Math.max(0, Math.min(cy, rect.height));
-          // update mouse node (simulation uses same coordinate space)
-          mouseNode.x = cx;
-          mouseNode.y = cy;
-          mouseNode.fx = cx;
-          mouseNode.fy = cy;
-          // nudge simulation so it reacts immediately
-          simulation.alpha(0.1);
-          lastEvent = null;
-        });
+        rafId = requestAnimationFrame(processPointer);
       }
     }
 
-    function handlePointerLeaveGlobal() {
-      // When pointer leaves the window, unpin the mouse node so it can drift
-      mouseNode.fx = null;
-      mouseNode.fy = null;
+    // Process pointer events in rAF loop
+    function processPointer() {
+      rafId = null;
+      if (!lastEvent) return;
+      const rect = canvas.getBoundingClientRect();
+      let cx = lastEvent.clientX - rect.left;
+      let cy = lastEvent.clientY - rect.top;
+      // clamp to canvas bounds
+      cx = Math.max(0, Math.min(cx, rect.width));
+      cy = Math.max(0, Math.min(cy, rect.height));
+
+      if (isDragging) {
+        // Smooth the drag motion for touch by lerping toward the pointer
+        mouseNode.x = lerp(mouseNode.x ?? cx, cx, DRAG_LERP);
+        mouseNode.y = lerp(mouseNode.y ?? cy, cy, DRAG_LERP);
+        mouseNode.fx = mouseNode.x;
+        mouseNode.fy = mouseNode.y;
+      } else {
+        // Hover behavior: immediate follow (keeps node pinned to pointer)
+        mouseNode.x = cx;
+        mouseNode.y = cy;
+        mouseNode.fx = cx;
+        mouseNode.fy = cy;
+      }
+
+      // nudge simulation so it reacts immediately
+      simulation.alpha(0.1);
+      lastEvent = null;
     }
 
-    // Attach global listeners so pointer is tracked even when over Header or other elements
+    // Start drag on pointerdown (capture pointer)
+    function onPointerDown(e: PointerEvent) {
+      // only primary pointer
+      if (!e.isPrimary) return;
+      // prevent default to avoid touch scrolling (listener must be non-passive)
+      e.preventDefault();
+
+      isDragging = true;
+      activePointerId = e.pointerId;
+      lastEvent = e;
+      // capture pointer so we keep receiving events even if finger leaves canvas
+      try {
+        (e.target as Element).setPointerCapture(e.pointerId);
+      } catch {
+        // ignore if not supported
+      }
+
+      // ensure rAF loop runs
+      if (rafId == null) rafId = requestAnimationFrame(processPointer);
+
+      // make simulation responsive while dragging
+      simulation.alphaTarget(0.1);
+      simulation.restart();
+    }
+
+    // End drag on pointerup / pointercancel
+    function endDragFromEvent(e: PointerEvent) {
+      if (!e.isPrimary) return;
+      if (activePointerId !== e.pointerId) {
+        // if pointer IDs don't match, still end drag for safety
+      }
+      isDragging = false;
+      activePointerId = null;
+      lastEvent = null;
+      // release pointer capture
+      try {
+        (e.target as Element).releasePointerCapture(e.pointerId);
+      } catch {
+        // ignore
+      }
+      // allow simulation to settle
+      simulation.alphaTarget(0);
+    }
+
+    // pointerup handler
+    function onPointerUp(e: PointerEvent) {
+      endDragFromEvent(e);
+    }
+
+    // pointercancel handler
+    function onPointerCancel(e: PointerEvent) {
+      endDragFromEvent(e);
+    }
+
+    // pointerleave of window: unpin so nodes can drift
+    function handlePointerLeaveGlobal() {
+      if (!isDragging) {
+        mouseNode.fx = null;
+        mouseNode.fy = null;
+      }
+    }
+
+    // Attach listeners
+    // pointerdown must be non-passive so we can call preventDefault to stop scrolling
+    canvas.addEventListener("pointerdown", onPointerDown, { passive: false });
+    canvas.addEventListener("pointermove", handlePointerMoveGlobal);
+    canvas.addEventListener("pointerup", onPointerUp);
+    canvas.addEventListener("pointercancel", onPointerCancel);
     window.addEventListener("pointermove", handlePointerMoveGlobal);
     window.addEventListener("pointerleave", handlePointerLeaveGlobal);
 
@@ -271,9 +358,25 @@ export default function CanvasForceGraph() {
     return () => {
       simulation.stop();
       simulationRef.current = null;
+
+      canvas.removeEventListener("pointerdown", onPointerDown);
+      canvas.removeEventListener("pointermove", handlePointerMoveGlobal);
+      canvas.removeEventListener("pointerup", onPointerUp);
+      canvas.removeEventListener("pointercancel", onPointerCancel);
       window.removeEventListener("pointermove", handlePointerMoveGlobal);
       window.removeEventListener("pointerleave", handlePointerLeaveGlobal);
-      if (rafId != null) cancelAnimationFrame(rafId);
+
+      // release any pointer capture if still active
+      try {
+        if (activePointerId != null) {
+          (canvas as Element).releasePointerCapture(activePointerId);
+        }
+      } catch {}
+
+      if (rafId != null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
     };
   }, [size.width, size.height]); // re-run when container size changes
 
@@ -284,6 +387,9 @@ export default function CanvasForceGraph() {
         width: "100%",
         height: "100%",
         position: "relative",
+        border: "1px solid #222",
+        boxSizing: "border-box",
+        overflow: "hidden",
       }}
     >
       <canvas
@@ -292,6 +398,7 @@ export default function CanvasForceGraph() {
           display: "block",
           width: "100%",
           height: "100%",
+          touchAction: "none", // extra safety for some browsers
         }}
       />
     </Box>
