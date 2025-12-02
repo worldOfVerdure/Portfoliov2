@@ -53,7 +53,6 @@ const Header = () => {
         height: '100vh',
         position: 'relative',
         width: '100%',
-        // zIndex: 2
       }}
     >
       <Graph />
