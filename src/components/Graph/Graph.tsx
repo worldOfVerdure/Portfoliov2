@@ -386,10 +386,7 @@ export default function CanvasForceGraph() {
       sx={{
         width: "100%",
         height: "100%",
-        position: "relative",
-        border: "1px solid #222",
-        boxSizing: "border-box",
-        overflow: "hidden",
+        position: "relative"
       }}
     >
       <canvas
