@@ -112,7 +112,7 @@ const ViewWorkBtn = ({ color, src, style }: ViewWorkBtnProps ) => {
     opacity: '.5rem'
   };
   return (
-    <AnimatedLink // class = glow-btn
+    <AnimatedLink
       href={src}
       style={style}
       sx={{
