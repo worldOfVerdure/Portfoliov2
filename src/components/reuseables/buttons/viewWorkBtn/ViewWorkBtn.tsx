@@ -100,7 +100,6 @@ const textFlash = keyframes`
 type ViewWorkBtnProps = {
   color: string;
   src: string
-
 };
 
 const ViewWorkBtn = ({ color, src }: ViewWorkBtnProps ) => {
@@ -149,6 +148,7 @@ const ViewWorkBtn = ({ color, src }: ViewWorkBtnProps ) => {
           zIndex: '-1'
         },
         '&:hover': {
+          animation: 'none',
           color: '#0a0a03',
           textShadow: 'none',
         },
