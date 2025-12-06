@@ -1,8 +1,27 @@
-import { animated, SpringValues } from '@react-spring/web';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { Box, Link, Stack } from '@mui/material';
 import { keyframes } from '@emotion/react';
-import React from 'react';
+
+const borderFlash = keyframes`
+  0% {
+    opacity: .1; 
+  }
+  2% {
+    opacity: .7; 
+  }
+  4% {
+    opacity: .3; 
+  }
+  8% {
+    opacity: 1; 
+  }
+  70% {
+    opacity: .9; 
+  }
+  100% {
+    opacity: 1; 
+  }
+`;
 
 const brokenFlash = keyframes`
   0% {
@@ -32,6 +51,11 @@ const brokenFlash = keyframes`
   90% {
     opacity: 1; 
   }
+`;
+
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to   { opacity: 1; }
 `;
 
 const textFlash = keyframes`
@@ -73,50 +97,22 @@ const textFlash = keyframes`
   }
 `;
 
-const borderFlash = keyframes`
-  0% {
-    opacity: .1; 
-  }
-  2% {
-    opacity: .7; 
-  }
-  4% {
-    opacity: .3; 
-  }
-  8% {
-    opacity: 1; 
-  }
-  70% {
-    opacity: .9; 
-  }
-  100% {
-    opacity: 1; 
-  }
-`;
-
-const AnimatedLink = animated(
-  React.forwardRef<HTMLAnchorElement, React.ComponentProps<typeof Link>>(function AnimatedLink(props, ref) {
-    return <Link ref={ref} {...props} />;
-  })
-);
-
 type ViewWorkBtnProps = {
   color: string;
-  src: string;
-  style: SpringValues<React.CSSProperties>;
+  src: string
+
 };
 
-const ViewWorkBtn = ({ color, src, style }: ViewWorkBtnProps ) => {
+const ViewWorkBtn = ({ color, src }: ViewWorkBtnProps ) => {
   const flashingLetterStyle = {
     animation: `${brokenFlash} 3.6s linear infinite`,
-    opacity: '.5rem'
+    opacity: '.5'
   };
   return (
-    <AnimatedLink
+    <Link
       href={src}
-      style={style}
       sx={{
-        animation: `${borderFlash} 1.5s linear infinite`,
+        animation: `${borderFlash} 1.5s linear infinite, ${fadeIn} 4s ease forwards`,
         border: `.2rem solid ${color}`,
         borderRadius: '.5rem',
         boxShadow: `inset 0 0 .75rem 0 ${color}, 0 0 .75rem 0 ${color}`,
@@ -125,6 +121,7 @@ const ViewWorkBtn = ({ color, src, style }: ViewWorkBtnProps ) => {
         p: '.8rem 3rem',
         perspective: '5rem',
         textDecoration: 'none',
+        transition: 'opacity 2s ease-in-out',
         '&::before': {
           background: `${color}`,
           bottom: 0,
@@ -152,8 +149,7 @@ const ViewWorkBtn = ({ color, src, style }: ViewWorkBtnProps ) => {
           zIndex: '-1'
         },
         '&:hover': {
-          animation: 'none',
-          color: '#000',
+          color: '#0a0a03',
           textShadow: 'none',
         },
         '&:hover .glow-text': {
@@ -188,9 +184,9 @@ const ViewWorkBtn = ({ color, src, style }: ViewWorkBtnProps ) => {
           Wo
           <Box className="flashing-letter" component="span" sx={flashingLetterStyle}>r</Box>k
         </Box>
-        <ArrowDownwardIcon fontSize="inherit"/>
+        <ArrowDownwardIcon fontSize="inherit" sx={flashingLetterStyle}/>
       </Stack>
-    </AnimatedLink>
+    </Link>
   );
 }
 
