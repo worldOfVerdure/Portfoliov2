@@ -165,9 +165,7 @@ const ViewWorkBtn = ({ color, src }: ViewWorkBtnProps ) => {
         },
         '&:hover::after': {
           opacity: '1'
-        },
-        '&:active::before': { animation: 'none' },
-        '&:active::after': { opacity: 1 }
+        }
       }}
       variant="body1"
     >
