@@ -34,7 +34,6 @@ const Header = () => {
   }));
 
   const [buttonSpring, buttonApi] = useSpring(() => ({
-    transform: 'translateY(80%)',
     opacity: 0,
     config: { tension: 100, friction: 60 }
   }));
@@ -43,7 +42,7 @@ const Header = () => {
   React.useEffect(() => {
     leftApi.start({ transform: 'translateX(0%)', opacity: 1 });
     rightApi.start({ transform: 'translateX(0%)', opacity: 1 });
-    buttonApi.start({ transform: 'translateY(0%)', opacity: 1 });
+    buttonApi.start({ opacity: 1 });
   }, [leftApi, rightApi, buttonApi]);
 
   return (
@@ -83,14 +82,12 @@ const Header = () => {
           component="h2"
           variant="h2"
           style={rightSpring}
-          sx={{ display: 'block' }}
+          sx={{ display: 'block', mb: 4 }}
         >
-          I&apos;m a Fullstack web developer.
+          I&apos;m a Fullstack Web Developer.
         </AnimatedTypography>
 
-        <AnimatedViewWorkBtn color={theme.palette.background.paper} src="#" style={buttonSpring}>
-          View My Work
-        </AnimatedViewWorkBtn>
+        <AnimatedViewWorkBtn color={theme.palette.background.paper} src="#" style={buttonSpring}/>
       </Stack>
     </Box>
   );
