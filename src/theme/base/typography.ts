@@ -7,7 +7,7 @@ const customTypography = (
 ) => ({
   h1: {
     fontFamily: fonts.heading,
-    fontWeight: 400,
+    fontWeight: 600,
     fontSize: '2.8rem', // xs
     lineHeight: 1.4,
     [`@media (min-width:${breakpoints.sm}px)`]: {
@@ -31,11 +31,11 @@ const customTypography = (
   },
   h2: {
     fontFamily: fonts.heading,
-    fontWeight: 400,
-    fontSize: '3rem', // xs
+    fontWeight: 600,
+    fontSize: '2.7rem', // xs
     lineHeight: 1.3,
     [`@media (min-width:${breakpoints.sm}px)`]: {
-      fontSize: '3.3rem',
+      fontSize: '3.1rem',
     },
     [`@media (min-width:${breakpoints.md}px)`]: {
       fontSize: '3.6rem',
@@ -85,19 +85,19 @@ const customTypography = (
       fontSize: '1.8rem',
     },
     [`@media (min-width:${breakpoints.md}px)`]: {
-      fontSize: '2.2rem',
+      fontSize: '2rem',
     },
     [`@media (min-width:${breakpoints.lg}px)`]: {
-      fontSize: '2.5rem',
+      fontSize: '2rem',
     },
     [`@media (min-width:${breakpoints.xl}px)`]: {
-      fontSize: '2.8rem',
+      fontSize: '2rem',
     },
     [`@media (min-width:${breakpoints.xxl}px)`]: {
-      fontSize: '3.1rem',
+      fontSize: '2rem',
     },
     [`@media (min-width:${breakpoints.xxxl}px)`]: {
-      fontSize: '3.4rem',
+      fontSize: '2rem',
     },
   },
   body2: {
@@ -217,17 +217,20 @@ const customTypography = (
   },
   navItem: {
     fontFamily: fonts.body,
-    fontSize: '2.1rem', // xs
+    fontSize: '1.4rem', // xs
     fontWeight: 400,
     textTransform: 'uppercase',
+    ['@media (min-width: 375px)']: {
+      fontSize: '1.6rem'
+    },
     [`@media (min-width:${breakpoints.sm}px)`]: {
-      fontSize: '2.3rem',
+      fontSize: '1.8rem'
     },
     [`@media (min-width:${breakpoints.md}px)`]: {
-      fontSize: '2.6rem',
+      fontSize: '1.9rem'
     },
     [`@media (min-width:${breakpoints.lg}px)`]: {
-      fontSize: '2.9rem',
+      fontSize: '2rem'
     }
   },
   navItemCard: {
@@ -236,13 +239,13 @@ const customTypography = (
     fontWeight: 400,
     lineHeight: 1,
     [`@media (min-width:${breakpoints.sm}px)`]: {
-      fontSize: '1.7rem',
+      fontSize: '1.7rem'
     },
     [`@media (min-width:${breakpoints.md}px)`]: {
-      fontSize: '1.8rem',
+      fontSize: '1.8rem'
     },
     [`@media (min-width:${breakpoints.lg}px)`]: {
-      fontSize: '1.9rem',
+      fontSize: '1.9rem'
     }
   },
   navTitle: {

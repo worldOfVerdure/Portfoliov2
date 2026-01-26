@@ -1,8 +1,8 @@
 import * as d3 from "d3-force";
 import { Box } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
 import customBreakpoints from '../../theme/base/breakpoints.ts';
-
+import { useEffect, useRef, useState } from "react";
+ 
 type Node = {
   id: number;
   x: number;
@@ -27,8 +27,8 @@ const MOUSE_EFFECT_RADIUS_EDGES = 375; // edges disappear sooner than nodes
 // Choose falloff: "linear" or "quadratic"
 const MOUSE_FALLOFF: "linear" | "quadratic" = "linear";
 
-/** Smoothing for touch dragging (0 = immediate, 1 = no movement) */
-const DRAG_LERP = 0.18;
+/* Smoothing for touch dragging (0 = immediate, 1 = no movement) */
+const DRAG_LERP = .18;
 
 /** Utility: convert #rrggbb to {r,g,b} */
 function hexToRgb(hex: string) {
@@ -146,7 +146,6 @@ export default function CanvasForceGraph() {
 
     // compute node count for current width
     const NODE_COUNT = getNodeCountForWidth(width);
-    console.log(`CanvasForceGraph — size: ${width}x${height}, NODE_COUNT: ${NODE_COUNT}`);
 
     // Hi-DPI scaling
     const dpr = window.devicePixelRatio || 1;

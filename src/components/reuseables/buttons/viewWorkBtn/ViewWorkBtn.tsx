@@ -175,7 +175,12 @@ const ViewWorkBtn = ({ color, src }: ViewWorkBtnProps ) => {
           component="span"
           sx={{
             animation: `${textFlash} 3.6s linear infinite`,
-            textShadow: `0 0 .25rem hsl(50, 0%, 100% / .5), 0 0 .5rem ${color}`
+            fontSize: {
+              xs: '1.8rem',
+              sm: '2rem',
+              md: '2.2rem'
+            },
+            textShadow: `0 0 .25rem hsl(50, 0%, 100% / .5), 0 0 .5rem ${color}`,
           }}
         > 
           View M
