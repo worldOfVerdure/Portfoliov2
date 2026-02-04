@@ -29,7 +29,7 @@ type TechNode = d3.SimulationNodeDatum & {
 
 // ----------------- TUNABLE CONSTANTS -----------------
 // You can increase WIDTH/HEIGHT or ICON_SIZE here to scale everything.
-const ICON_SIZE = 65;
+const ICON_SIZE = 75;
 const SIZE = 780;
 const WIDTH = SIZE; // viewBox width (example: 1.5x previous)
 const HEIGHT = SIZE; // viewBox height (example: 1.5x previous)

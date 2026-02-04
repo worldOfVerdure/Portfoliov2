@@ -19,15 +19,12 @@ const AboutMe = () => {
       <Stack
         alignItems="center"
         flexDirection={{ lg: 'column', xl: 'row' }}
-        justifyContent="space-around"
-        spacing={0}
-        sx={{ '& > *': { flexGrow: 0 } }}
+        justifyContent="space-evenly"
       > {/* Container for avatar&text and techstack */}
         <Stack
           alignItems="center"
           spacing={{ xs: 3, md: 6 }}
           sx={{
-            flexGrow: 0,
             maxWidth: '480px',
             width: { xs: '90%', md: 'fit-content' }
           }}
