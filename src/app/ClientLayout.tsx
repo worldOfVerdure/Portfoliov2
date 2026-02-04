@@ -16,6 +16,10 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
         <CssBaseline />
         <Global
           styles={ theme => css`
+            *::selection {
+              background-color: ${theme.palette.text.secondary};
+              color: #272356;
+            }
             body {
               background-color: ${theme.palette.background.default};
               font-size: 1.6rem;

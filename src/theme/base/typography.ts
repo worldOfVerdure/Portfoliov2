@@ -8,7 +8,7 @@ const customTypography = (
   h1: {
     fontFamily: fonts.heading,
     fontWeight: 600,
-    fontSize: '2.8rem', // xs
+    fontSize: '3.1rem', // xs
     lineHeight: 1.4,
     [`@media (min-width:${breakpoints.sm}px)`]: {
       fontSize: '3.25rem',
@@ -32,7 +32,7 @@ const customTypography = (
   h2: {
     fontFamily: fonts.heading,
     fontWeight: 600,
-    fontSize: '2.7rem', // xs
+    fontSize: '3rem', // xs
     lineHeight: 1.3,
     [`@media (min-width:${breakpoints.sm}px)`]: {
       fontSize: '3.1rem',

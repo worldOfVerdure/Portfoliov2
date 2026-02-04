@@ -1,7 +1,9 @@
 // TechStackForceSmoothGentleHeightCircular.tsx
-import { useEffect, useRef } from 'react';
+'use client';
+
 import * as d3 from 'd3';
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
+import { useEffect, useRef } from 'react';
 
 import css from '../../assets/techStack/css.svg';
 import emotion from '../../assets/techStack/emotion.webp';
@@ -27,24 +29,25 @@ type TechNode = d3.SimulationNodeDatum & {
 
 // ----------------- TUNABLE CONSTANTS -----------------
 // You can increase WIDTH/HEIGHT or ICON_SIZE here to scale everything.
-const ICON_SIZE = 64;
-const WIDTH = 1140; // viewBox width (example: 1.5x previous)
-const HEIGHT = 780; // viewBox height (example: 1.5x previous)
+const ICON_SIZE = 65;
+const SIZE = 780;
+const WIDTH = SIZE; // viewBox width (example: 1.5x previous)
+const HEIGHT = SIZE; // viewBox height (example: 1.5x previous)
 
 const COL_GAP = 270;
 const ROW_GAP = 150;
 const BOUNCE = 0.8;
 
 // Mouse tuning
-const MOUSE_RADIUS = ICON_SIZE * 2.5;
-const MOUSE_STRENGTH = 40;
+const MOUSE_RADIUS = ICON_SIZE * .5;
+const MOUSE_STRENGTH = 1;
 const MAX_IMPULSE_PER_TICK = 0.5;
 const VEL_LERP = 0.08;
 // -----------------------------------------------------
 
-const LABEL_FONT_SIZE = 12;
-const LABEL_LINE_HEIGHT = 16;
-const LABEL_PADDING = 8;
+const LABEL_FONT_SIZE = 30;
+const LABEL_LINE_HEIGHT = 50;
+const LABEL_PADDING = 4;
 
 const initialTech = [
   { id: 'html', rawSrc: html },
@@ -66,7 +69,7 @@ function resolveSrc(raw: any): string {
   return '';
 }
 
-const TechStackForceSmoothGentleHeightCircular: React.FC = () => {
+const TechStackForceSmoothGentleHeightCircular = () => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const simulationRef = useRef<d3.Simulation<TechNode, undefined> | null>(null);
 
@@ -179,7 +182,7 @@ const TechStackForceSmoothGentleHeightCircular: React.FC = () => {
       .attr('cy', centerY)
       .attr('r', visibleCircleRadius)
       .attr('fill', 'transparent')
-      .attr('stroke', 'rgba(255,255,255,0.04)')
+      // .attr('stroke', 'rgba(45, 218, 195, 0.86)')
       .attr('stroke-width', strokeWidth);
 
     // group that will be clipped to the circle
@@ -217,7 +220,7 @@ const TechStackForceSmoothGentleHeightCircular: React.FC = () => {
       .attr('text-anchor', 'middle')
       .attr('dy', ICON_SIZE / 2 + LABEL_LINE_HEIGHT / 2 + 4)
       .style('pointer-events', 'none')
-      .style('fill', '#333');
+      .style('fill', '#e9fbfd');
 
     // set initial group transforms so nothing renders at 0,0
     nodeGroups.attr('transform', (d) => `translate(${d.x ?? centerX},${d.y ?? centerY})`);
@@ -397,21 +400,22 @@ const TechStackForceSmoothGentleHeightCircular: React.FC = () => {
   return (
     <Box
       sx={{
-        width: { xs: '80vw', md: '58vw' }, // responsive width
+        alignItems: 'center',
         aspectRatio: '1 / 1', // keep square so borderRadius: '50%' makes a circle
+        background: 'transparent',
+        borderRadius: '50%',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
         m: 0,
-        p: 0,
-        borderRadius: '50%',
         overflow: 'hidden',
-        background: 'transparent',
+        p: 0,
+        width: { xs: '95vw', sm: '65vw', md: '45vw' },
+        '&:hover': { cursor: 'pointer' }
       }}
     >
       <svg
         ref={svgRef}
-        style={{ width: '100%', height: '100%', display: 'block', touchAction: 'none' }}
+        style={{  display: 'block', height: '100%', touchAction: 'none', width: '100%' }}
       />
     </Box>
   );

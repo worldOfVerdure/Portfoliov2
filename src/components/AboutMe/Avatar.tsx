@@ -8,14 +8,14 @@ const Avatar = () => {
       sx={{
         width: {
           xs: '225px',
-          md: '400px'
+          md: '300px'
         }
       }}
     >
       <Image
         alt="Avatar photo of web author, Andrew Chupka"
-        height={1912}
-        sizes="(max-width: 600px) 225px, 400px"
+        height={676}
+        sizes="(max-width: 600px) 225px, 300px"
         src={avatarImg.src}
         style={{
           borderRadius: '50%',
@@ -23,7 +23,7 @@ const Avatar = () => {
           width: '100%',
           
         }}
-        width={1912}
+        width={676}
       />
     </Box>
    );

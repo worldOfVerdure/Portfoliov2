@@ -177,8 +177,7 @@ const ViewWorkBtn = ({ color, src }: ViewWorkBtnProps ) => {
             animation: `${textFlash} 3.6s linear infinite`,
             fontSize: {
               xs: '1.8rem',
-              sm: '2rem',
-              md: '2.2rem'
+              sm: '2.6rem'
             },
             textShadow: `0 0 .25rem hsl(50, 0%, 100% / .5), 0 0 .5rem ${color}`,
           }}
@@ -188,7 +187,11 @@ const ViewWorkBtn = ({ color, src }: ViewWorkBtnProps ) => {
           Wo
           <Box className="flashing-letter" component="span" sx={flashingLetterStyle}>r</Box>k
         </Box>
-        <ArrowDownwardIcon fontSize="inherit" sx={flashingLetterStyle}/>
+        <ArrowDownwardIcon sx={{
+            fontSize: { xs: '2.5rem', sm: '2.4rem', md: '2.6rem' },
+            ...flashingLetterStyle
+          }}
+        />
       </Stack>
     </Link>
   );
