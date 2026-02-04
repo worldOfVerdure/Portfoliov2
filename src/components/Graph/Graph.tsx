@@ -210,11 +210,12 @@ export default function CanvasForceGraph() {
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
     // Global pointer move (hover-like behavior) — still useful when not actively dragging
-    function handlePointerMoveGlobal(e: PointerEvent) {
+    function handlePointerMoveGlobal(e: PointerEvent) { // Ignore touch pointer moves entirely so finger interaction doesn't move nodes
+      if (e.pointerType === "touch") return;
       // store last event and schedule rAF processing
       lastEvent = e;
-      if (rafId == null) {
-        rafId = requestAnimationFrame(processPointer);
+      if (rafId == null) { 
+        rafId = requestAnimationFrame(processPointer); 
       }
     }
 
