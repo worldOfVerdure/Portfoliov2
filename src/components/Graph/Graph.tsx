@@ -50,7 +50,11 @@ function hexToRgb(hex: string) {
  * CanvasForceGraph (responsive) with:
  * - global pointer tracking so the mouse node follows even when pointer is over other DOM elements
  * - separate proximity radii for nodes and edges (edges disappear before nodes)
- * - improved mobile dragging using pointer capture, touch-action none, rAF batching and smoothing (lerp)
+ * - desktop dragging retained using pointer capture, rAF batching and lerp smoothing; mobile touch
+ *     dragging disabled (pointerType === "touch" ignored); rAF batching and lerp still used for
+ *     hover and desktop drag.
+ *    
+
  */
 export default function CanvasForceGraph() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -248,13 +252,21 @@ export default function CanvasForceGraph() {
     function onPointerDown(e: PointerEvent) {
       // only primary pointer
       if (!e.isPrimary) return;
-      // prevent default to avoid touch scrolling (listener must be non-passive)
+
+      // NEW: ignore touch pointers so mobile scrolling is not interfered with
+      // allow mouse and pen to still drag
+      if (e.pointerType === "touch") {
+        // do nothing for touch: no dragging on mobile
+        return;
+      }
+
+      // prevent default to avoid touch scrolling for mouse/pen initiated drags (mouse won't scroll but keep for parity)
       e.preventDefault();
 
       isDragging = true;
       activePointerId = e.pointerId;
       lastEvent = e;
-      // capture pointer so we keep receiving events even if finger leaves canvas
+      // capture pointer so we keep receiving events even if pointer leaves canvas
       try {
         (e.target as Element).setPointerCapture(e.pointerId);
       } catch {
@@ -307,7 +319,7 @@ export default function CanvasForceGraph() {
     }
 
     // Attach listeners
-    // pointerdown must be non-passive so we can call preventDefault to stop scrolling
+    // pointerdown must be non-passive so we can call preventDefault to stop scrolling for mouse/pen drags
     canvas.addEventListener("pointerdown", onPointerDown, { passive: false });
     canvas.addEventListener("pointermove", handlePointerMoveGlobal);
     canvas.addEventListener("pointerup", onPointerUp);

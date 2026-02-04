@@ -1,16 +1,18 @@
 import avatarImg from '../../assets/avatar/Avatar.webp';
-import { Box } from '@mui/material';
+import Image from 'next/image';
 
 const Avatar = () => {
   return (
-    <Box
-      alt="Avatar photo of a silhouetted, pixelated man"
-      component="img"
+    <Image
+      alt="Avatar photo of web author, Andrew Chupka"
+      height={1912}
       src={avatarImg.src}
-      sx={{
+      style={{
         height: 'auto',
+        borderRadius: '50%',
         width: '25rem'
       }}
+      width={1912}
     />
   );
 }
