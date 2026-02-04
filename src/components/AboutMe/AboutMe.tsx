@@ -1,6 +1,6 @@
-import Avatar from './Avatar.tsx';
+// import Avatar from './Avatar.tsx';
 import { Box, Stack, Typography } from '@mui/material';
-import TechStack from './TechStack.tsx';
+// import TechStack from './TechStack.tsx';
 
 const AboutMe = () => {
   return (
