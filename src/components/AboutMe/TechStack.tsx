@@ -1,5 +1,5 @@
 // TechStackForceSmoothGentleHeightCircular.tsx
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import { Box } from '@mui/material';
 
@@ -398,7 +398,7 @@ const TechStackForceSmoothGentleHeightCircular: React.FC = () => {
     <Box
       sx={{
         width: { xs: '80vw', md: '58vw' }, // responsive width
-        aspectRatio: '1 / 1',             // keep square so borderRadius: '50%' makes a circle
+        aspectRatio: '1 / 1', // keep square so borderRadius: '50%' makes a circle
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
