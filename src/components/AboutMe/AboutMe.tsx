@@ -4,7 +4,11 @@ import TechStack from './TechStack.tsx';
 
 const AboutMe = () => {
   return (
-    <Box component="section" id="about" sx={{ height: '90vh', pb: '100px'}}> {/* Outer most container, contains h2, avatar&text, tech used */}
+    <Box
+      component="section"
+      id="about"
+      sx={{ height: '90vh', pb: '200px', scrollMarginTop: '80px' }}
+    > {/* Outer most container, contains h2, avatar&text, tech used */}
       <Typography
         sx={{
           color: 'background.paper',

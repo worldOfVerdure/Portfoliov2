@@ -109,6 +109,7 @@ const ViewWorkBtn = ({ color, src }: ViewWorkBtnProps ) => {
   };
   return (
     <Link
+      aria-label="View My Work Button"
       href={src}
       sx={{
         animation: `${borderFlash} 1.5s linear infinite, ${fadeIn} 4s ease forwards`,
